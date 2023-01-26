@@ -1,3 +1,5 @@
+[server]
+port=[bind port]
 [db.hdu-oracle]
 id="hdu-oracle"
 type="oracle"
