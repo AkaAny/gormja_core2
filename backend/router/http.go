@@ -8,15 +8,28 @@ import (
 	"net/http"
 )
 
-func NewRouter(serviceRuntime *backend.ServiceRuntime) *gin.Engine {
+type ServiceRuntimeFactoryFunc func(script string) (*backend.ServiceRuntime, error)
+
+func NewRouter(runtimeRegistry *backend.RuntimeRegistry,
+	factoryFunc func(script string) (*backend.ServiceRuntime, error)) *gin.Engine {
 	var engine = gin.Default()
+	var runtimeGroup = engine.Group("/runtime")
+	ManagerAPIs(runtimeGroup, runtimeRegistry, factoryFunc)
 	engine.POST("/lookup", func(c *gin.Context) {
+		var runtimeID = c.Query("runtimeID")
 		var topic = c.Query("topic")
 		var ctx = context.Background()
 		condMap, err := unmarshalCondMap(c)
 		if err != nil {
 			c.JSON(http.StatusBadRequest, gin.H{
-				"err": fmt.Errorf("unamarhsal cond map with err:%w", err),
+				"err": err,
+			})
+			return
+		}
+		serviceRuntime, err := runtimeRegistry.Get(runtimeID)
+		if err != nil {
+			c.JSON(http.StatusNotFound, gin.H{
+				"err": err,
 			})
 			return
 		}
@@ -32,12 +45,20 @@ func NewRouter(serviceRuntime *backend.ServiceRuntime) *gin.Engine {
 		})
 	})
 	engine.PUT("/manualRefresh", func(c *gin.Context) {
+		var runtimeID = c.Query("runtimeID")
 		var topic = c.Query("topic")
 		var ctx = context.Background()
 		condMap, err := unmarshalCondMap(c)
 		if err != nil {
 			c.JSON(http.StatusBadRequest, gin.H{
 				"err": fmt.Errorf("unamarhsal cond map with err:%w", err),
+			})
+			return
+		}
+		serviceRuntime, err := runtimeRegistry.Get(runtimeID)
+		if err != nil {
+			c.JSON(http.StatusNotFound, gin.H{
+				"err": err,
 			})
 			return
 		}
