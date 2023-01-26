@@ -8,14 +8,8 @@ import (
 	"net/http"
 )
 
-type ServiceRuntimeFactoryFunc func(script string) (*backend.ServiceRuntime, error)
-
-func NewRouter(runtimeRegistry *backend.RuntimeRegistry,
-	factoryFunc func(script string) (*backend.ServiceRuntime, error)) *gin.Engine {
-	var engine = gin.Default()
-	var runtimeGroup = engine.Group("/runtime")
-	ManagerAPIs(runtimeGroup, runtimeRegistry, factoryFunc)
-	engine.POST("/lookup", func(c *gin.Context) {
+func RegisterDataRouter(group gin.IRouter, runtimeRegistry *backend.RuntimeRegistry) {
+	group.POST("/lookup", func(c *gin.Context) {
 		var runtimeID = c.Query("runtimeID")
 		var topic = c.Query("topic")
 		var ctx = context.Background()
@@ -44,7 +38,7 @@ func NewRouter(runtimeRegistry *backend.RuntimeRegistry,
 			"data": dests,
 		})
 	})
-	engine.PUT("/manualRefresh", func(c *gin.Context) {
+	group.PUT("/manualRefresh", func(c *gin.Context) {
 		var runtimeID = c.Query("runtimeID")
 		var topic = c.Query("topic")
 		var ctx = context.Background()
@@ -70,7 +64,6 @@ func NewRouter(runtimeRegistry *backend.RuntimeRegistry,
 		}
 		c.JSON(http.StatusOK, gin.H{})
 	})
-	return engine
 }
 
 func unmarshalCondMap(c *gin.Context) (map[string]interface{}, error) {

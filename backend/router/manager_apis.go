@@ -8,7 +8,9 @@ import (
 	"net/http"
 )
 
-func ManagerAPIs(group gin.IRouter,
+type ServiceRuntimeFactoryFunc func(script string) (*backend.ServiceRuntime, error)
+
+func RegisterManageRouter(group gin.IRouter,
 	runtimeRegistry *backend.RuntimeRegistry, factoryFunc ServiceRuntimeFactoryFunc) {
 	group.PUT("/put", func(c *gin.Context) {
 		var runtimeID = c.Query("id")
