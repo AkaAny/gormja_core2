@@ -6,6 +6,12 @@ type RuntimeRegistry struct {
 	idRuntimeMap map[string]*ServiceRuntime
 }
 
+func NewRuntimeRegistry() *RuntimeRegistry {
+	return &RuntimeRegistry{
+		idRuntimeMap: make(map[string]*ServiceRuntime),
+	}
+}
+
 func (x *RuntimeRegistry) Put(id string, serviceRuntime *ServiceRuntime) {
 	x.idRuntimeMap[id] = serviceRuntime
 }
