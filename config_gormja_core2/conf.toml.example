@@ -1,0 +1,7 @@
+[db.hdu-oracle]
+id="hdu-oracle"
+type="oracle"
+dsn="oracle://[userName]:[password]@[host]/[service name]"
+[cache.main]
+type="redis"
+dsn="tcp://localhost:6379?userName=&password=&db=0"
