@@ -1,4 +1,4 @@
-package gormja_core2
+package backend
 
 import "gorm.io/gorm"
 

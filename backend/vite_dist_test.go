@@ -1,26 +1,25 @@
-package gormja_core2
+package backend
 
 import (
-	"embed"
 	"fmt"
 	"github.com/dop251/goja"
 	"github.com/sirupsen/logrus"
 	"gormja_core2/utils"
+	"io/fs"
+	"os"
 	"testing"
 )
 
-//go:embed my-ts-lib/dist
-var distFS embed.FS
-
 func GetScriptContent() string {
-	const pathPrefix = "my-ts-lib/dist/assets"
-	entries, err := distFS.ReadDir(pathPrefix)
+	var dirFS = os.DirFS("../my-ts-lib")
+	const pathPrefix = "dist/assets"
+	entries, err := fs.ReadDir(dirFS, pathPrefix)
 	if err != nil {
 		panic(err)
 	}
 	var jsFileName = entries[0].Name()
 	fmt.Println("js file:", jsFileName)
-	rawData, err := distFS.ReadFile(pathPrefix + "/" + jsFileName)
+	rawData, err := fs.ReadFile(dirFS, pathPrefix+"/"+jsFileName)
 	if err != nil {
 		panic(err)
 	}
