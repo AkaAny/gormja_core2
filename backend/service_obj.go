@@ -13,7 +13,9 @@ import (
 
 type ServiceObject struct {
 	runtime              *goja.Runtime
+	classType            ClassTypeType
 	instanceObj          *goja.Object
+	serviceID            string
 	unifyEntityModelType reflect.Type
 }
 

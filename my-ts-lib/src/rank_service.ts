@@ -16,7 +16,7 @@ interface RankLookupTrait{
 
 export class RankService extends DBService implements ServiceTrait<Rank,RankLookupTrait>{
     constructor() {
-        super({
+        super("rank",{
             dataSourceID:'hdu-oracle',
         },false);
     }

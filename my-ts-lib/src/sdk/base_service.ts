@@ -27,10 +27,12 @@ export interface ServiceTrait<T,W>{
 }
 
 export class BaseService{
+    serviceID:string;
     sourceType:SourceType;
     ttl:Duration;
 
-    constructor(sourceType:SourceType,cachePolicy:CachePolicy) {
+    constructor(serviceID:string,sourceType:SourceType,cachePolicy:CachePolicy) {
+        this.serviceID=serviceID;
         this.sourceType=sourceType;
         if(cachePolicy===false){
             this.ttl=0;
@@ -43,8 +45,8 @@ export class BaseService{
 export class DBService extends BaseService{
     dbInitParam:DBInitParam;
     private db:any;
-    constructor(dbInitParam:DBInitParam,cachePolicy:CachePolicy) {
-        super(SourceType.DB,cachePolicy);
+    constructor(serviceID:string,dbInitParam:DBInitParam,cachePolicy:CachePolicy) {
+        super(serviceID,SourceType.DB,cachePolicy);
         this.dbInitParam=dbInitParam;
     }
 

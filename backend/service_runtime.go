@@ -87,6 +87,7 @@ func (x *ServiceRuntime) RegisterService(call goja.FunctionCall) goja.Value {
 		reject(goErr)
 		return x.runtime.ToValue(promise)
 	}
+	var serviceID = instanceObj.Get("serviceID").String()
 	//var instanceObj = call.Argument(0).ToObject(x.runtime)
 	var sourceType = instanceObj.Get("sourceType").String()
 	fmt.Println("source type:", sourceType)
@@ -104,10 +105,12 @@ func (x *ServiceRuntime) RegisterService(call goja.FunctionCall) goja.Value {
 	var unifyModelType = NewModelReflectType(unifyModelObj, x.runtime)
 	var wrapperObj = &ServiceObject{
 		runtime:              x.runtime,
+		classType:            prototype,
 		instanceObj:          instanceObj,
+		serviceID:            serviceID,
 		unifyEntityModelType: unifyModelType,
 	}
-	x.serviceRegistry.Put(prototype, wrapperObj)
+	x.serviceRegistry.Put(wrapperObj)
 	resolve(instanceObj)
 	return x.runtime.ToValue(promise)
 }

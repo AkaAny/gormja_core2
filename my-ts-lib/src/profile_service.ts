@@ -12,7 +12,7 @@ interface PersonLookupTrait{
 export class ProfileService extends DBService implements ServiceTrait<Profile, PersonLookupTrait>{
     //ttl with manual refresh api
     constructor() {
-        super({
+        super("profile",{
             dataSourceID:'hdu-oracle',
         },{
             ttl:1*Day,

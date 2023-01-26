@@ -12,7 +12,7 @@ interface ScoreLookupTrait{
 
 export class ScoreService extends DBService implements ServiceTrait<Score,ScoreLookupTrait>{
     constructor() {
-        super({
+        super("score",{
             dataSourceID:"hdu-oracle",
         },{
             ttl: 1*Day,
