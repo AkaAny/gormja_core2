@@ -2,14 +2,12 @@ package config
 
 import (
 	"github.com/spf13/viper"
-	"gorm.io/gorm"
-	"gormja_core2/cacheutil"
-	"gormja_core2/dbutil"
 )
 
 type Config struct {
-	DB    map[string]DBConfig `mapstructure:"db"`
-	Cache map[string]CacheConfig
+	DB     map[string]DBConfig `mapstructure:"db"`
+	Cache  map[string]CacheConfig
+	Script map[string]ScriptConfig
 }
 
 func Unmarshal(vh *viper.Viper) *Config {
@@ -28,31 +26,4 @@ func NewDefaultViper() *viper.Viper {
 		panic(err)
 	}
 	return vh
-}
-
-type DBConfig struct {
-	ID   string `mapstructure:"id"`
-	Type string
-	DSN  string `mapstructure:"dsn"`
-}
-
-func (x DBConfig) ToDB() *gorm.DB {
-	var opener = dbutil.DBOpener{
-		Type: x.Type,
-		DSN:  x.DSN,
-	}
-	return opener.ToDB()
-}
-
-type CacheConfig struct {
-	Type string
-	DSN  string `mapstructure:"dsn"`
-}
-
-func (x CacheConfig) ToClient() interface{} {
-	var opener = cacheutil.CacheOpener{
-		Type: x.Type,
-		DSN:  x.DSN,
-	}
-	return opener.ToCache()
 }
