@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/dop251/goja"
 	"gorm.io/gorm"
+	"gormja_core2/jsutil"
 	"gormja_core2/utils"
 	"reflect"
 )
@@ -37,8 +38,8 @@ func (x *JSDB) NewSession(call goja.FunctionCall, runtime *goja.Runtime) goja.Va
 		modelGoType = NewModelReflectType(modelObj, runtime)
 	}
 	//table name
-	var tableNameFuncJSValue = GetInstanceStaticMember(modelObj, "tableName", runtime)
-	var tableNameCallable = MustAssertJSFunc(tableNameFuncJSValue)
+	var tableNameFuncJSValue = jsutil.GetInstanceStaticMember(modelObj, "tableName", runtime)
+	var tableNameCallable = jsutil.MustAssertJSFunc(tableNameFuncJSValue)
 	tableNameJSValue, err := tableNameCallable(modelObj)
 	if err != nil {
 		panic(fmt.Errorf("get table name with err:%w", err))

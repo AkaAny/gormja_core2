@@ -3,6 +3,7 @@ package backend
 import (
 	"fmt"
 	"github.com/dop251/goja"
+	"gormja_core2/jsutil"
 	"gormja_core2/mirror"
 	"reflect"
 	"strings"
@@ -16,7 +17,7 @@ var dbTypeReflectTypeMap = map[string]reflect.Type{
 }
 
 func NewModelReflectType(modelObj *goja.Object, runtime *goja.Runtime) reflect.Type {
-	var className = GetInstanceClassName(modelObj, runtime)
+	var className = jsutil.GetInstanceClassName(modelObj, runtime)
 	fmt.Println(className)
 	var dbFieldAnnoHandle = NewTSAnnotation("dbField", runtime)
 	keyAttrMap, err := dbFieldAnnoHandle.GetObject(modelObj)
@@ -55,6 +56,6 @@ func NewModelReflectType(modelObj *goja.Object, runtime *goja.Runtime) reflect.T
 }
 
 func GetModelCacheKey(modelObj *goja.Object, runtime *goja.Runtime) string {
-	var className = GetInstanceClassName(modelObj, runtime)
+	var className = jsutil.GetInstanceClassName(modelObj, runtime)
 	return className
 }

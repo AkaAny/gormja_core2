@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"github.com/dop251/goja"
 	"github.com/guonaihong/gout"
-	"gormja_core2/utils"
+	"gormja_core2/jsutil"
 	"io"
 	"net/http"
 	"reflect"
@@ -70,8 +70,8 @@ func fetch(call goja.FunctionCall, runtime *goja.Runtime) goja.Value {
 	//http.Header{}
 	for _, key := range headerMapObj.Keys() {
 		var valueObj = headerMapObj.Get(key).ToObject(runtime)
-		if utils.IsJSArray(runtime, valueObj) {
-			values, err := utils.ToGoArray[string](valueObj)
+		if jsutil.IsJSArray(runtime, valueObj) {
+			values, err := jsutil.ToGoArray[string](valueObj)
 			if err != nil {
 				onRejected(fmt.Errorf("key:%s refers to an array, convert to go got err:%w", key, err))
 				return runtime.ToValue(promise)

@@ -1,4 +1,4 @@
-package backend
+package jsutil
 
 import "github.com/dop251/goja"
 

@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"github.com/dop251/goja"
 	"github.com/sirupsen/logrus"
-	"gormja_core2/utils"
+	"gormja_core2/jsutil"
 )
 
 func NewServiceRuntime(dbRegistry *DBRegistry, cacheClient CacheClient, logger *logrus.Logger) *ServiceRuntime {
@@ -29,7 +29,7 @@ type ServiceRuntime struct {
 }
 
 func (x *ServiceRuntime) Init() {
-	utils.NewJSConsole(x.logger).Attach(x.runtime)
+	jsutil.NewJSConsole(x.logger).Attach(x.runtime)
 	var runtimeObj = x.runtime.NewObject()
 	if err := runtimeObj.Set("registerService", x.RegisterService); err != nil {
 		panic(err)
@@ -94,7 +94,7 @@ func (x *ServiceRuntime) RegisterService(call goja.FunctionCall) goja.Value {
 		reject(err)
 		return x.runtime.ToValue(promise)
 	}
-	var newUnifyModelCallable = MustAssertJSMemberFunc(instanceObj, "newUnifyModel")
+	var newUnifyModelCallable = jsutil.MustAssertJSMemberFunc(instanceObj, "newUnifyModel")
 	unifyModelJSValue, err := newUnifyModelCallable(instanceObj)
 	if err != nil {
 		reject(err)
@@ -124,7 +124,7 @@ func (x *ServiceRuntime) registerDBService(instanceObj *goja.Object) error {
 		return goErr
 	}
 	var dbJSValue = NewJSDB(db).ToJSValue(x.runtime)
-	var initFunc = MustAssertJSMemberFunc(instanceObj, "init")
+	var initFunc = jsutil.MustAssertJSMemberFunc(instanceObj, "init")
 	fmt.Println("init func:", initFunc)
 	_, err := initFunc(instanceObj, dbJSValue)
 	if err != nil {

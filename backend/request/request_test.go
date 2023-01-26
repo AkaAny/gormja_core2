@@ -5,7 +5,7 @@ import (
 	"github.com/dop251/goja"
 	"github.com/gin-gonic/gin"
 	"github.com/sirupsen/logrus"
-	"gormja_core2/utils"
+	"gormja_core2/jsutil"
 	"net/http"
 	"strconv"
 	"testing"
@@ -39,7 +39,7 @@ func TestFetch(t *testing.T) {
 	time.Sleep(100 * time.Millisecond)
 	var runtime = goja.New()
 	var baseLogger = logrus.New()
-	var jsConsole = utils.NewJSConsole(baseLogger)
+	var jsConsole = jsutil.NewJSConsole(baseLogger)
 	jsConsole.Attach(runtime)
 	MakeFetch(runtime)
 	runtime.RunString(`

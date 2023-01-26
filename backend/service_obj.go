@@ -7,7 +7,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/dop251/goja"
-	"gormja_core2/utils"
+	"gormja_core2/jsutil"
 	"reflect"
 )
 
@@ -26,7 +26,7 @@ func (x *ServiceObject) getCacheKey(condMap map[string]interface{}) string {
 	var toHashData = rawData
 	var hashData = sha1.New().Sum(toHashData)
 	var hashStr = hex.EncodeToString(hashData)
-	var className = GetInstanceClassName(x.instanceObj, x.runtime)
+	var className = jsutil.GetInstanceClassName(x.instanceObj, x.runtime)
 	var cacheKey = fmt.Sprintf("lookup::%s_%s", className, hashStr)
 	return cacheKey
 }
@@ -50,13 +50,13 @@ func (x *ServiceObject) Lookup(ctx context.Context, condMap map[string]interface
 
 func (x *ServiceObject) forceGetFromServiceAndCacheTo(ctx context.Context, condMap map[string]interface{},
 	cacheKey string, client CacheClient) ([]interface{}, error) {
-	var lookupCallable = MustAssertJSMemberFunc(x.instanceObj, "lookup")
+	var lookupCallable = jsutil.MustAssertJSMemberFunc(x.instanceObj, "lookup")
 	var queryObjJSValue = x.runtime.ToValue(condMap)
 	destsJSValue, err := lookupCallable(x.instanceObj, queryObjJSValue)
 	if err != nil {
 		return nil, fmt.Errorf("lookup from service with err:%w", err)
 	}
-	exportedGoArray, err := utils.ToGoArray[interface{}](destsJSValue)
+	exportedGoArray, err := jsutil.ToGoArray[interface{}](destsJSValue)
 	if err != nil {
 		return nil, fmt.Errorf("to go array with err:%w", err)
 	}

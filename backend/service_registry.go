@@ -3,6 +3,7 @@ package backend
 import (
 	"fmt"
 	"github.com/dop251/goja"
+	"gormja_core2/jsutil"
 )
 
 type ServiceRegistry struct {
@@ -34,7 +35,7 @@ func (x *ServiceRegistry) LookupByName(name string) (*ServiceObject, error) {
 }
 
 func (x *ServiceRegistry) Put(classType ClassTypeType, wrapperObj *ServiceObject) {
-	var className = GetClassName(classType.ToObject(x.runtime))
+	var className = jsutil.GetClassName(classType.ToObject(x.runtime))
 	x.namePrototypeMap[className] = classType
 	x.prototypeServiceMap[classType] = wrapperObj
 }

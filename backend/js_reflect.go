@@ -3,6 +3,7 @@ package backend
 import (
 	"fmt"
 	"github.com/dop251/goja"
+	"gormja_core2/jsutil"
 )
 
 type JSReflectMirror struct {
@@ -19,7 +20,7 @@ func NewJSReflectMirror(runtime *goja.Runtime) *JSReflectMirror {
 }
 
 func (x JSReflectMirror) GetOwnKeys(obj goja.Value) ([]string, error) {
-	var callable = MustAssertJSMemberFunc(x.reflectObj, "ownKeys")
+	var callable = jsutil.MustAssertJSMemberFunc(x.reflectObj, "ownKeys")
 	keysJSValue, err := callable(x.runtime.GlobalObject(), obj)
 	if err != nil {
 		return nil, fmt.Errorf("call ownKeys with err:%w", err)
@@ -34,7 +35,7 @@ func (x JSReflectMirror) GetOwnKeys(obj goja.Value) ([]string, error) {
 }
 
 func (x JSReflectMirror) GetMetadata(metaDataKey, obj, propertyKey goja.Value) (goja.Value, error) {
-	var callable = MustAssertJSMemberFunc(x.reflectObj, "getMetadata")
+	var callable = jsutil.MustAssertJSMemberFunc(x.reflectObj, "getMetadata")
 	attrObj, err := callable(x.runtime.GlobalObject(),
 		metaDataKey, obj, propertyKey)
 	if err != nil {

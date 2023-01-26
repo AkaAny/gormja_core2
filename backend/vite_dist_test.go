@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"github.com/dop251/goja"
 	"github.com/sirupsen/logrus"
-	"gormja_core2/utils"
+	"gormja_core2/jsutil"
 	"io/fs"
 	"os"
 	"testing"
@@ -30,14 +30,14 @@ func TestLoad(t *testing.T) {
 	var scriptContent = GetScriptContent()
 	//fmt.Println(string(rawData))
 	var runtime = goja.New()
-	var jsConsole = utils.NewJSConsole(logrus.New())
+	var jsConsole = jsutil.NewJSConsole(logrus.New())
 	jsConsole.Attach(runtime)
 	_, err := runtime.RunString(scriptContent)
 	if err != nil {
 		//panic(err)
 	}
 	var rankPrototype = runtime.Get("Rank").ToObject(runtime)
-	var tableNameFuncJSValue = MustAssertJSMemberFunc(rankPrototype, "tableName")
+	var tableNameFuncJSValue = jsutil.MustAssertJSMemberFunc(rankPrototype, "tableName")
 	fmt.Println(tableNameFuncJSValue(rankPrototype))
 
 	var constructorJSValue = rankPrototype.Get("constructor")
@@ -54,9 +54,9 @@ func TestLoad(t *testing.T) {
 	//	panic(err)
 	//}
 	var rankInstance = runtime.Get("RankInstance")
-	var className = GetInstanceClassName(rankInstance.ToObject(runtime), runtime)
+	var className = jsutil.GetInstanceClassName(rankInstance.ToObject(runtime), runtime)
 	fmt.Println(className)
-	var tableNameOnInstance = GetInstanceStaticMember(rankInstance.ToObject(runtime), "tableName", runtime)
+	var tableNameOnInstance = jsutil.GetInstanceStaticMember(rankInstance.ToObject(runtime), "tableName", runtime)
 	fmt.Println(tableNameOnInstance)
 	//var metadataKey = runtime.Get("metaDataKey")
 	//var goNewMetadataKey = runtime.ToValue("dbField") //goja.NewSymbol("dbField") symbol is unique by addr
