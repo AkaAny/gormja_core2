@@ -21,7 +21,7 @@ func TestServiceRuntime_LoadScript(t *testing.T) {
 	var serviceRuntime = NewServiceRuntime(dbRegistry, cacheClient, logrus.New())
 	serviceRuntime.Init()
 	serviceRuntime.LoadScript(scriptContent)
-	dests, err := serviceRuntime.Lookup(context.Background(), "ProfileService", map[string]interface{}{
+	dests, err := serviceRuntime.Lookup(context.Background(), "profile", map[string]interface{}{
 		"StaffID": "20113128",
 	})
 	if err != nil {

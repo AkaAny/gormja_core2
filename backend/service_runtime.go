@@ -52,15 +52,15 @@ func (x *ServiceRuntime) LoadScript(content string) {
 	}
 }
 
-func (x *ServiceRuntime) Lookup(ctx context.Context, serviceName string,
+func (x *ServiceRuntime) Lookup(ctx context.Context, serviceID string,
 	condMap map[string]interface{}) (dests []interface{}, err error) {
-	serviceObj, err := x.serviceRegistry.LookupByName(serviceName)
+	serviceObj, err := x.serviceRegistry.LookupByName(serviceID)
 	if err != nil {
 		return nil, err
 	}
 	dests, err = serviceObj.Lookup(ctx, condMap, x.cacheClient)
 	if err != nil {
-		return nil, fmt.Errorf("lookup on service:%s with err:%w", serviceName, err)
+		return nil, fmt.Errorf("lookup on service:%s with err:%w", serviceID, err)
 	}
 	return dests, nil
 }
