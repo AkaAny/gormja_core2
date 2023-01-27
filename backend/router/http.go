@@ -64,6 +64,27 @@ func RegisterDataRouter(group gin.IRouter, runtimeRegistry *backend.RuntimeRegis
 		}
 		c.JSON(http.StatusOK, gin.H{})
 	})
+	group.GET("/description", func(c *gin.Context) {
+		runtimeID, serviceID := c.Query("runtimeID"), c.Query("topic")
+		serviceRuntime, err := runtimeRegistry.Get(runtimeID)
+		if err != nil {
+			c.JSON(http.StatusNotFound, gin.H{
+				"err": err,
+			})
+			return
+		}
+		serviceObj, err := serviceRuntime.GetServiceByID(serviceID)
+		if err != nil {
+			c.JSON(http.StatusNotFound, gin.H{
+				"err": err,
+			})
+			return
+		}
+		var serviceDesc = serviceObj.GetDescription()
+		c.JSON(http.StatusOK, gin.H{
+			"data": serviceDesc,
+		})
+	})
 }
 
 func unmarshalCondMap(c *gin.Context) (map[string]interface{}, error) {

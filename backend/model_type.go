@@ -16,6 +16,20 @@ var dbTypeReflectTypeMap = map[string]reflect.Type{
 	"float64": reflect.TypeOf(float64(0.0)),
 }
 
+func reverseTypeMap(strTypeMap map[string]reflect.Type) map[reflect.Type]string {
+	var typeStrMap = make(map[reflect.Type]string)
+	for k, v := range strTypeMap {
+		typeStrMap[v] = k
+	}
+	return typeStrMap
+}
+
+var reflectTypeDBTypeMap = reverseTypeMap(dbTypeReflectTypeMap)
+
+func GetTypeStrByReflectType(reflectType reflect.Type) string {
+	return reflectTypeDBTypeMap[reflectType]
+}
+
 func NewModelReflectType(modelObj *goja.Object, runtime *goja.Runtime) reflect.Type {
 	var className = jsutil.GetInstanceClassName(modelObj, runtime)
 	fmt.Println(className)

@@ -144,6 +144,10 @@ func (x *ServiceRuntime) GetService(call goja.FunctionCall, runtime *goja.Runtim
 	return wrapperObj.instanceObj
 }
 
+func (x *ServiceRuntime) GetServiceByID(serviceID string) (*ServiceObject, error) {
+	return x.serviceRegistry.LookupByName(serviceID)
+}
+
 func (x *ServiceRuntime) DebugBreakPoint(call goja.FunctionCall, runtime *goja.Runtime) goja.Value {
 	var hint = call.Argument(0).String()
 	fmt.Println("breakpoint hit:", hint)

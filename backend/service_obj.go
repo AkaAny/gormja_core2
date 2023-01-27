@@ -91,3 +91,25 @@ func (x *ServiceObject) ManualRefresh(ctx context.Context, condMap map[string]in
 	}
 	return nil
 }
+
+func (x *ServiceObject) GetDescription() *ServiceDescription {
+	var fieldDescs = make([]*FieldDescription, 0)
+	for fieldIndex := 0; fieldIndex < x.unifyEntityModelType.NumField(); fieldIndex++ {
+		var reflectField = x.unifyEntityModelType.Field(fieldIndex)
+		var fieldDesc = &FieldDescription{
+			Name: reflectField.Name,
+			Type: GetTypeStrByReflectType(reflectField.Type),
+		}
+		fieldDescs = append(fieldDescs, fieldDesc)
+	}
+	var modelDesc = &ModelDescription{
+		ClassName: x.unifyEntityModelType.Name(),
+		Fields:    fieldDescs,
+	}
+	var className = jsutil.GetInstanceClassName(x.instanceObj, x.runtime)
+	return &ServiceDescription{
+		ServiceID:             x.serviceID,
+		ClassName:             className,
+		UnifyModelDescription: modelDesc,
+	}
+}
