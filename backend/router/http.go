@@ -89,7 +89,7 @@ func RegisterDataRouter(group gin.IRouter, runtimeRegistry *backend.RuntimeRegis
 
 func unmarshalCondMap(c *gin.Context) (map[string]interface{}, error) {
 	var condMap = make(map[string]interface{})
-	err := c.BindJSON(condMap)
+	err := c.BindJSON(&condMap)
 	if err != nil {
 		return nil, fmt.Errorf("unamarhsal cond map with err:%w", err)
 	}
