@@ -34,6 +34,9 @@ export class ProfileService extends DBService implements ServiceTrait<Profile, P
             MajorCode: item.MajorCode,
             SchoolCode: "hdu",
             StaffID: item.StaffID,
+            StaffName:item.StaffName,
+            Gender:item.Gender=="1"?"男":"女",
+            ClassID:item.ClassID,
             UnitCode: item.UnitCode,
         });
     }

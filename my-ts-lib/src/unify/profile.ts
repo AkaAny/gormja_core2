@@ -3,6 +3,9 @@ import {dbField, DBType} from "../sdk/db_field";
 export interface ProfileTrait{
     SchoolCode:string;
     StaffID:string;
+    StaffName:string;
+    Gender:string;
+    ClassID:string;
     Grade:string;
     UnitCode:string;
     MajorCode:string;
@@ -17,6 +20,12 @@ export class Profile implements ProfileTrait{
         isPrimaryKey:true,
     })
     StaffID:string;
+    @dbField("staff_name",DBType.string)
+    StaffName:string;
+    @dbField("gender",DBType.string)
+    Gender:string;
+    @dbField("class_id",DBType.string)
+    ClassID:string;
 
     @dbField("grade",DBType.string)
     Grade:string;
@@ -28,6 +37,9 @@ export class Profile implements ProfileTrait{
     constructor(props:ProfileTrait) {
         this.SchoolCode=props.SchoolCode;
         this.StaffID=props.StaffID;
+        this.StaffName=props.StaffName;
+        this.Gender=props.Gender;
+        this.ClassID=props.ClassID;
         this.Grade=props.Grade;
         this.UnitCode=props.UnitCode;
         this.MajorCode=props.MajorCode;
