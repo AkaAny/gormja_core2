@@ -16,21 +16,21 @@ func RegisterDataRouter(group gin.IRouter, runtimeRegistry *backend.RuntimeRegis
 		condMap, err := unmarshalCondMap(c)
 		if err != nil {
 			c.JSON(http.StatusBadRequest, gin.H{
-				"err": err,
+				"msg": err.Error(),
 			})
 			return
 		}
 		serviceRuntime, err := runtimeRegistry.Get(runtimeID)
 		if err != nil {
 			c.JSON(http.StatusNotFound, gin.H{
-				"err": err,
+				"msg": err.Error(),
 			})
 			return
 		}
 		dests, err := serviceRuntime.Lookup(ctx, topic, condMap)
 		if err != nil {
 			c.JSON(http.StatusInternalServerError, gin.H{
-				"err": err,
+				"msg": err.Error(),
 			})
 			return
 		}
@@ -45,20 +45,20 @@ func RegisterDataRouter(group gin.IRouter, runtimeRegistry *backend.RuntimeRegis
 		condMap, err := unmarshalCondMap(c)
 		if err != nil {
 			c.JSON(http.StatusBadRequest, gin.H{
-				"err": fmt.Errorf("unamarhsal cond map with err:%w", err),
+				"err": fmt.Errorf("unamarhsal cond map with err:%w", err).Error(),
 			})
 			return
 		}
 		serviceRuntime, err := runtimeRegistry.Get(runtimeID)
 		if err != nil {
 			c.JSON(http.StatusNotFound, gin.H{
-				"err": err,
+				"msg": err.Error(),
 			})
 			return
 		}
 		if err := serviceRuntime.ManualRefresh(ctx, topic, condMap); err != nil {
 			c.JSON(http.StatusInternalServerError, gin.H{
-				"err": err,
+				"err": err.Error(),
 			})
 			return
 		}
@@ -69,14 +69,14 @@ func RegisterDataRouter(group gin.IRouter, runtimeRegistry *backend.RuntimeRegis
 		serviceRuntime, err := runtimeRegistry.Get(runtimeID)
 		if err != nil {
 			c.JSON(http.StatusNotFound, gin.H{
-				"err": err,
+				"err": err.Error(),
 			})
 			return
 		}
 		serviceObj, err := serviceRuntime.GetServiceByID(serviceID)
 		if err != nil {
 			c.JSON(http.StatusNotFound, gin.H{
-				"err": err,
+				"err": err.Error(),
 			})
 			return
 		}
