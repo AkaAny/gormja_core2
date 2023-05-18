@@ -3,6 +3,7 @@ module gormja_core2
 go 1.19
 
 require (
+	github.com/AkaAny/config-tv v0.0.0-20230516072153-7163ab9c3911
 	github.com/dop251/goja v0.0.0-20230122112309-96b1610dd4f7
 	github.com/gin-gonic/gin v1.8.2
 	github.com/guonaihong/gout v0.3.4
@@ -49,9 +50,9 @@ require (
 	github.com/thoas/go-funk v0.9.2 // indirect
 	github.com/ugorji/go/codec v1.2.7 // indirect
 	golang.org/x/crypto v0.0.0-20220525230936-793ad666bf5e // indirect
-	golang.org/x/net v0.5.0 // indirect
-	golang.org/x/sys v0.4.0 // indirect
-	golang.org/x/text v0.6.0 // indirect
+	golang.org/x/net v0.8.0 // indirect
+	golang.org/x/sys v0.6.0 // indirect
+	golang.org/x/text v0.8.0 // indirect
 	google.golang.org/protobuf v1.28.1 // indirect
 	gopkg.in/ini.v1 v1.67.0 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect

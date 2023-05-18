@@ -1,6 +1,9 @@
 package main
 
 import (
+	"github.com/AkaAny/config-tv"
+	"github.com/AkaAny/config-tv/plugin/k8s_configmap"
+	"github.com/AkaAny/config-tv/plugin/k8s_secret"
 	"github.com/gin-gonic/gin"
 	"github.com/redis/go-redis/v9"
 	"github.com/sirupsen/logrus"
@@ -10,20 +13,34 @@ import (
 )
 
 func main() {
-	var vh = config.NewDefaultViper()
-	var cfg = config.Unmarshal(vh)
+	var configPluginConfig = config_tv.GetConfigPluginConfigFromEnv()
+	var pluginMap = make(config_tv.TypePluginMap)
+	{
+		var pluginConfigMap = configPluginConfig.Plugin[k8s_secret.PluginName]
+		var k8sSecretTypeKVPlugin = k8s_secret.NewK8sSecretPluginFromConfig(pluginConfigMap)
+		pluginMap[k8s_secret.PluginName] = k8sSecretTypeKVPlugin
+	}
+	{
+		var pluginConfigMap = configPluginConfig.Plugin[k8s_configmap.PluginName]
+		var k8sConfigMapTypeKVPlugin = k8s_configmap.NewK8sConfigPluginFromConfig(pluginConfigMap)
+		pluginMap[k8s_configmap.PluginName] = k8sConfigMapTypeKVPlugin
+	}
+	var mainConfig = new(config.Config)
+	{
+		config_tv.GetAndUnmarshalMainConfigFromEnv(mainConfig, pluginMap)
+	}
 	var dbRegistry = backend.NewDBRegistry()
-	for id, cfgItem := range cfg.DB {
+	for id, cfgItem := range mainConfig.DB {
 		var db = cfgItem.ToDB()
 		dbRegistry.Register(id, db)
 	}
-	var cacheConfigItem = cfg.Cache["main"]
+	var cacheConfigItem = mainConfig.Cache["main"]
 	var redisClient = cacheConfigItem.ToClient().(*redis.Client)
 	var cacheClient = backend.NewRedisCacheClient(redisClient)
 	var runtimeRegistry = backend.NewRuntimeRegistry()
 	var logger = logrus.New()
 	//init startup script
-	for id, cfgItem := range cfg.Script {
+	for id, cfgItem := range mainConfig.Script {
 		var scriptStr = cfgItem.Open()
 		var serviceRuntime = backend.NewServiceRuntime(dbRegistry, cacheClient, logger)
 		serviceRuntime.Init()
@@ -40,5 +57,5 @@ func main() {
 			serviceRuntime.LoadScript(script)
 			return serviceRuntime, nil
 		})
-	cfg.Server.RunGinEngine(engine)
+	mainConfig.Server.RunGinEngine(engine)
 }
