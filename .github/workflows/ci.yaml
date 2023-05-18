@@ -16,6 +16,17 @@ jobs:
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16
+      - name: build ts libs
+        run: |
+          cd my-ts-lib
+          pwd
+          ls -al
+          npm install
+          ./build.sh
+          ls -al
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
 
@@ -31,5 +42,5 @@ jobs:
           password: "${{ secrets.ACR_PASSWORD }}"
       - name: cp images to aliyun
         run: |
-          docker build --tag registry.cn-hangzhou.aliyuncs.com/any_business/${{ env.CONTAINER }} .
-          docker push registry.cn-hangzhou.aliyuncs.com/any_business/${{ env.CONTAINER }}
+          docker build --tag registry.cn-hangzhou.aliyuncs.com/any-public/${{ env.CONTAINER }} .
+          docker push registry.cn-hangzhou.aliyuncs.com/any-public/${{ env.CONTAINER }}
