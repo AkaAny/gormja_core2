@@ -1,0 +1,5 @@
+[plugin]
+[plugin.k8s_secret]
+mode="inCluster"
+[plugin.k8s_configmap]
+mode="inCluster"
