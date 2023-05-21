@@ -1,2 +1,3 @@
 .idea
 backend/config_gormja_core2/conf.toml
+*.kubeconfig
