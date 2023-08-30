@@ -35,6 +35,7 @@ func (x *ServiceObject) getCacheKey(condMap map[string]interface{}) string {
 
 func (x *ServiceObject) Lookup(ctx context.Context, condMap map[string]interface{}, cacheClient CacheClient) ([]interface{}, error) {
 	var cacheKey = x.getCacheKey(condMap)
+	fmt.Println("service:", x.serviceID, "cache key:", cacheKey)
 	dests, cacheExist, err := cacheClient.Get(ctx, cacheKey)
 	if err != nil {
 		return nil, fmt.Errorf("get from cache with err:%w", err)
