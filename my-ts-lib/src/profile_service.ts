@@ -2,7 +2,7 @@ import {DBService, ServiceTrait} from "./sdk/base_service";
 import {Day} from "./sdk/duration";
 import {Profile, ProfileTrait} from "./unify/profile";
 import {log} from "./sdk/logger";
-import {HDUStudentDetail} from "./hdu_student_detail";
+import {HDUStudentDetail} from "./school/hdu/hdu_student_detail";
 
 interface PersonLookupTrait{
     //SchoolCode:string;

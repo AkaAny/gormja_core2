@@ -1,7 +1,7 @@
 import {DBService, ServiceTrait} from "./sdk/base_service";
 import {log} from "./sdk/logger";
 import {GradeOverview, GradeOverviewTrait} from "./unify/grade_student_overview";
-import {HDUGradeOverview} from "./hdu_grade_student_overview";
+import {HDUGradeOverview} from "./school/hdu/hdu_grade_student_overview";
 
 interface GraduateStudentOverviewLookupTrait{
     SchoolCode:string;

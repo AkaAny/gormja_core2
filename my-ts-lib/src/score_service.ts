@@ -1,6 +1,6 @@
 import {DBService, ServiceTrait} from "./sdk/base_service";
 import {Score, ScoreTrait} from "./unify/score";
-import {HDUScore, HDUScoreTypeNeedToSkip} from "./hdu_score";
+import {HDUScore, HDUScoreTypeNeedToSkip} from "./school/hdu/hdu_score";
 import {log} from "./sdk/logger";
 import {Day} from "./sdk/duration";
 

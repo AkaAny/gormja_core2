@@ -1,5 +1,5 @@
-import {dbField, DBType} from "./sdk/db_field";
-import {SourceEntityTrait} from "./sdk/db";
+import {dbField, DBType} from "../../sdk/db_field";
+import {SourceEntityTrait} from "../../sdk/db";
 
 export class HDUStudentDetail implements SourceEntityTrait{
     @dbField("STAFFID",DBType.string)

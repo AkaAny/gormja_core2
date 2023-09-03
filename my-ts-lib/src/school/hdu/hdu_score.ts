@@ -1,5 +1,5 @@
-import {dbField, DBType} from "./sdk/db_field";
-import {SourceEntityTrait} from "./sdk/db";
+import {dbField, DBType} from "../../sdk/db_field";
+import {SourceEntityTrait} from "../../sdk/db";
 
 export const HDUScoreTypeNeedToSkip ='缓考'
 export type HDUScoreStrType='优秀'| '良好' | '中等' | '合格' | '及格' | '不及格' | '缓考';
