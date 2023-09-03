@@ -2,20 +2,28 @@ import {dbField, DBType} from "./sdk/db_field";
 import {SourceEntityTrait} from "./sdk/db";
 
 export class HDUStudentDetail implements SourceEntityTrait{
-    @dbField("STAFF_ID",DBType.string)
+    @dbField("STAFFID",DBType.string)
     StaffID:string;
-    @dbField("STAFF_NAME",DBType.string)
+    @dbField("STAFFNAME",DBType.string)
     StaffName:string;
     @dbField("GENDER",DBType.string)
     Gender:string;
-    @dbField("CLASS_ID",DBType.string)
+    @dbField("CLASSID",DBType.string)
     ClassID:string;
     @dbField("GRADE",DBType.string)
     Grade:string;
-    @dbField("UNIT_ID",DBType.string)
+    @dbField("UNITCODE",DBType.string)
     UnitCode:string;
-    @dbField("MAJOR_CODE",DBType.string)
+    @dbField("UNITNAME",DBType.string)
+    UnitName:string;
+    @dbField("MAJORCODE",DBType.string)
     MajorCode:string;
+    @dbField("MAJORNAME",DBType.string)
+    MajorName:string;
+    @dbField("TEACHERID",DBType.string)
+    CounselorStaffID:string;
+    @dbField("TEACHERNAME",DBType.string)
+    CounselorStaffName:string;
 
     constructor(props:any) {
         this.StaffID=props.StaffID;
@@ -24,7 +32,11 @@ export class HDUStudentDetail implements SourceEntityTrait{
         this.Grade=props.Grade;
         this.ClassID=props.ClassID;
         this.UnitCode=props.UnitCode;
+        this.UnitName=props.UnitName;
         this.MajorCode=props.MajorCode;
+        this.MajorName=props.MajorName;
+        this.CounselorStaffID=props.CounselorStaffID;
+        this.CounselorStaffName=props.CounselorStaffName;
     }
 
     static newModel():HDUStudentDetail{
@@ -32,6 +44,6 @@ export class HDUStudentDetail implements SourceEntityTrait{
     }
 
     static tableName():string{
-        return "HDUHELP_VIEW_STUDENT_DETAIL"
+        return "HDUHELP_VIEW_STUDENT_INFO"
     }
 }

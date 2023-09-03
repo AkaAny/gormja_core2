@@ -8,7 +8,11 @@ export interface ProfileTrait{
     ClassID:string;
     Grade:string;
     UnitCode:string;
+    UnitName:string;
     MajorCode:string;
+    MajorName:string;
+    CounselorStaffID:string;
+    CounselorStaffName:string;
 }
 
 export class Profile implements ProfileTrait{
@@ -31,8 +35,18 @@ export class Profile implements ProfileTrait{
     Grade:string;
     @dbField("unit_code",DBType.string)
     UnitCode:string;
+    @dbField("unit_name",DBType.string)
+    UnitName:string;
     @dbField("major_code",DBType.string)
     MajorCode:string;
+    @dbField("major_name",DBType.string)
+    MajorName:string;
+
+    @dbField("counselor_staff_id",DBType.string)
+    CounselorStaffID:string;
+    @dbField("counselor_staff_name",DBType.string)
+    CounselorStaffName:string;
+
 
     constructor(props:ProfileTrait) {
         this.SchoolCode=props.SchoolCode;
@@ -42,7 +56,11 @@ export class Profile implements ProfileTrait{
         this.ClassID=props.ClassID;
         this.Grade=props.Grade;
         this.UnitCode=props.UnitCode;
+        this.UnitName=props.UnitName;
         this.MajorCode=props.MajorCode;
+        this.MajorName=props.MajorName;
+        this.CounselorStaffID=props.CounselorStaffID;
+        this.CounselorStaffName=props.CounselorStaffName;
     }
 
 }
