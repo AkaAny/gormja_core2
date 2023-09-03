@@ -62,8 +62,8 @@ export class ProfileService extends DBService implements ServiceTrait<Profile, P
     }):Profile[]{
         let studentDetails=this.getDB().startSession(HDUStudentDetail)
             .where("GRADE = ?",`${conds.Grade}`)
-            .where("UNIT_ID = ?",conds.UnitCode)
-            .where("MAJOR_CODE=?",conds.MajorCode)
+            .where("UNITCODE = ?",conds.UnitCode)
+            .where("MAJORCODE=?",conds.MajorCode)
             .find() as HDUStudentDetail[];
         const items=studentDetails.map(this.toUnify);
         log(items);
