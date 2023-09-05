@@ -74,6 +74,7 @@ func (x *JSDBSession) ToJSValue(runtime *goja.Runtime) goja.Value {
 	var obj = runtime.NewObject()
 	obj.Set("where", x.Where)
 	obj.Set("find", x.Find)
+	obj.Set("count", x.Count)
 	return obj
 }
 
@@ -99,4 +100,10 @@ func (x *JSDBSession) Find(call goja.FunctionCall, runtime *goja.Runtime) goja.V
 	var destJSValue = runtime.ToValue(dest)
 	fmt.Println(dest, destJSValue)
 	return destJSValue
+}
+
+func (x *JSDBSession) Count(call goja.FunctionCall, runtime *goja.Runtime) goja.Value {
+	var count int64 = 0
+	x.tx.Count(&count)
+	return runtime.ToValue(count)
 }

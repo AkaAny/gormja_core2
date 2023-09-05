@@ -7,6 +7,7 @@ export interface DBTrait {
 export interface DBSessionTrait<T>{
     where(query:any,...args:any[]):DBSessionTrait<T>;
     find():T[];
+    count():number;
 }
 
 export interface SourceEntityTrait {
