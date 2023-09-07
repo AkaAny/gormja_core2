@@ -8,6 +8,7 @@ import {ScoreService} from "./score_service";
 import {GraduateStudentOverviewService} from "./graduate_student_overview_service";
 import {JLUserRegisterOverviewService} from "./jl_register_item_service";
 import {ClassInfoService} from "./class_info_service";
+import {JLFutureTargetService} from "./jl_future_target_service";
 //import {dbField} from "./sdk/db_field";
 
 Promise.all([
@@ -17,6 +18,7 @@ Promise.all([
     getRuntime().registerService(GraduateStudentOverviewService),
     getRuntime().registerService(ClassInfoService),
     getRuntime().registerService(JLUserRegisterOverviewService),
+    getRuntime().registerService(JLFutureTargetService),
 ]).then((services)=>{
     getRuntime().debugBreakpoint("after register services",services);
     // const rankService=services[2];
