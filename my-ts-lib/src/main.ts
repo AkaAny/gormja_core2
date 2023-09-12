@@ -9,11 +9,13 @@ import {GraduateStudentOverviewService} from "./graduate_student_overview_servic
 import {JLUserRegisterOverviewService} from "./jl_register_item_service";
 import {ClassInfoService} from "./class_info_service";
 import {JLFutureTargetService} from "./jl_future_target_service";
+import {RaceRewardService} from "./race_reward_service";
 //import {dbField} from "./sdk/db_field";
 
 Promise.all([
     getRuntime().registerService(ProfileService),
     getRuntime().registerService(ScoreService),
+    getRuntime().registerService(RaceRewardService),
     getRuntime().registerService(RankService),
     getRuntime().registerService(GraduateStudentOverviewService),
     getRuntime().registerService(ClassInfoService),
