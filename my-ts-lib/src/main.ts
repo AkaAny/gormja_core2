@@ -10,6 +10,7 @@ import {JLUserRegisterOverviewService} from "./jl_register_item_service";
 import {ClassInfoService} from "./class_info_service";
 import {JLFutureTargetService} from "./jl_future_target_service";
 import {RaceRewardService} from "./race_reward_service";
+import {JLInternshipExperienceService} from "./jl_internship_experience_service";
 //import {dbField} from "./sdk/db_field";
 
 Promise.all([
@@ -21,6 +22,7 @@ Promise.all([
     getRuntime().registerService(ClassInfoService),
     getRuntime().registerService(JLUserRegisterOverviewService),
     getRuntime().registerService(JLFutureTargetService),
+    getRuntime().registerService(JLInternshipExperienceService),
 ]).then((services)=>{
     getRuntime().debugBreakpoint("after register services",services);
     // const rankService=services[2];
