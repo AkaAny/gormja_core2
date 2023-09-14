@@ -7,13 +7,15 @@ import (
 	"gormja_core2/mirror"
 	"reflect"
 	"strings"
+	"time"
 )
 
 var dbTypeReflectTypeMap = map[string]reflect.Type{
-	"string":  reflect.TypeOf(""),
-	"int64":   reflect.TypeOf(int64(0)),
-	"bool":    reflect.TypeOf(true),
-	"float64": reflect.TypeOf(float64(0.0)),
+	"string":   reflect.TypeOf(""),
+	"int64":    reflect.TypeOf(int64(0)),
+	"bool":     reflect.TypeOf(true),
+	"float64":  reflect.TypeOf(float64(0.0)),
+	"dateTime": reflect.TypeOf(time.Now()),
 }
 
 func reverseTypeMap(strTypeMap map[string]reflect.Type) map[reflect.Type]string {

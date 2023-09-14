@@ -5,7 +5,8 @@ export enum DBType {
     string = "string",
     int64 = "int64",
     bool = "bool",
-    float64 = "float64"
+    float64 = "float64",
+    dateTime="dateTime",
 }
 
 const metaDataKey = "dbField";//Symbol("dbField");
