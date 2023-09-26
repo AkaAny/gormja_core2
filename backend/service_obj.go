@@ -77,6 +77,9 @@ func (x *ServiceObject) forceGetFromServiceAndCacheTo(ctx context.Context, condM
 	//	var dest = destValue.Interface()
 	//	dests = append(dests, dest)
 	//}
+	if len(dests) == 0 {
+		return dests, nil
+	}
 	var ttlInMilliSecond = x.instanceObj.Get("ttl").ToInteger()
 	if err := client.Set(ctx, cacheKey, dests, ttlInMilliSecond); err != nil {
 		return dests, fmt.Errorf("set to cache with err:%w", err)
