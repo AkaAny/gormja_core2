@@ -86,6 +86,7 @@ export class RankService extends DBService implements ServiceTrait<Rank,RankLook
             StaffID:conds.StaffID,
             GPA:gpaItem.gpa,
             Rank:rank,
+            RankPercent:rank/studentDetails.length,
         });
         log(result);
         return [result];

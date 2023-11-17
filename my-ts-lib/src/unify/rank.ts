@@ -10,6 +10,8 @@ export interface RankTrait{
     GPA:number;
 
     Rank:number;
+
+    RankPercent:number;
 }
 
 export class Rank implements RankTrait{
@@ -29,11 +31,15 @@ export class Rank implements RankTrait{
     @dbField("rank",DBType.float64)
     Rank:number;
 
+    @dbField("rank_percent",DBType.float64)
+    RankPercent:number;
+
     constructor(props:RankTrait) {
         this.SchoolCode=props.SchoolCode;
         this.StaffID=props.StaffID;
         this.GPA=props.GPA;
         this.Rank=props.Rank;
+        this.RankPercent=props.RankPercent;
     }
 
     static tableName():string{
@@ -46,6 +52,7 @@ const RankInstance=new Rank({
     StaffID:"20113128",
     GPA: 0,
     Rank: 0,
+    RankPercent:0,
 });
 
 log(Reflect.ownKeys(Rank.prototype));
