@@ -34,9 +34,15 @@ func main() {
 		var db = cfgItem.ToDB()
 		dbRegistry.Register(id, db)
 	}
-	var cacheConfigItem = mainConfig.Cache["main"]
-	var redisClient = cacheConfigItem.ToClient().(*redis.Client)
-	var cacheClient = backend.NewRedisCacheClient(redisClient)
+	var cacheClient backend.CacheClient = nil
+	if mainConfig.EnableCache {
+		var cacheConfigItem = mainConfig.Cache["main"]
+
+		var redisClient = cacheConfigItem.ToClient().(*redis.Client)
+		cacheClient = backend.NewRedisCacheClient(redisClient)
+	} else {
+		cacheClient = &backend.NoCacheCacheClient{}
+	}
 	var runtimeRegistry = backend.NewRuntimeRegistry()
 	var logger = logrus.New()
 	//init startup script
