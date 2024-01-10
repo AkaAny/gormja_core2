@@ -6,8 +6,8 @@ import {HDUStudentDetail} from "./school/hdu/hdu_student_detail";
 
 interface PersonLookupTrait{
     //SchoolCode:string;
-    StaffID?:string;
-    ClassIDs?:string[];
+    StaffID:string;
+    //ClassIDs?:string[];
 }
 
 export class ProfileService extends DBService implements ServiceTrait<Profile, PersonLookupTrait>{
@@ -23,15 +23,16 @@ export class ProfileService extends DBService implements ServiceTrait<Profile, P
     lookup(params: PersonLookupTrait): Profile[] {
         let tx=this.getDB().startSession(HDUStudentDetail);
         log(params);
-        if(params.StaffID){
-            tx=tx.where("STAFFID=?",params.StaffID);
-        }else{
-            if(params.ClassIDs && Array.isArray(params.ClassIDs) && params.ClassIDs.length>0){
-                tx=tx.where("CLASSID IN ?",params.ClassIDs);
-            }else{
-                return [];
-            }
-        }
+        tx=tx.where("STAFFID=?",params.StaffID);
+        // if(params.StaffID){
+        //     tx=tx.where("STAFFID=?",params.StaffID);
+        // }else{
+        //     if(params.ClassIDs && Array.isArray(params.ClassIDs) && params.ClassIDs.length>0){
+        //         tx=tx.where("CLASSID IN ?",params.ClassIDs);
+        //     }else{
+        //         return [];
+        //     }
+        // }
         const studentDetails= tx.find() as HDUStudentDetail[];
         const items=studentDetails.map(this.toUnify);
         log(items);
