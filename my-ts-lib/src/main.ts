@@ -12,6 +12,7 @@ import {JLFutureTargetService} from "./jl_future_target_service";
 import {RaceRewardService} from "./race_reward_service";
 import {JLInternshipExperienceService} from "./jl_internship_experience_service";
 import {JLRecommendForStudentService} from "./jl_recommend_for_student_service";
+import {UserInfoService} from "./user_info_service";
 //import {dbField} from "./sdk/db_field";
 
 Promise.all([
@@ -25,15 +26,9 @@ Promise.all([
     getRuntime().registerService(JLFutureTargetService),
     getRuntime().registerService(JLInternshipExperienceService),
     getRuntime().registerService(JLRecommendForStudentService),
+    getRuntime().registerService(UserInfoService),
 ]).then((services)=>{
     getRuntime().debugBreakpoint("after register services",services);
-    // const rankService=services[2];
-    // rankService.lookup({
-    //     // Grade:'2020',
-    //     // UnitCode:'27',
-    //     // MajorCode:'2703',
-    //     StaffID: '20113128',
-    // });
 }).catch((err)=>{
     getRuntime().debugBreakpoint("register all services catch",err);
 });
